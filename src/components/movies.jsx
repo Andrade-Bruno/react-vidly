@@ -18,7 +18,8 @@ class Movies extends Component {
 							<th className='col'>Genre</th>
 							<th className='col'>Stock</th>
 							<th className='col'>Rate</th>
-							<td className='col'></td>
+							<th className='col'>Favorite</th>
+							<th className='col'></th>
 						</tr>
 					</thead>
 					<tbody>{this.renderMovies()}</tbody>
@@ -34,6 +35,9 @@ class Movies extends Component {
 				<td>{movie.genre.name}</td>
 				<td>{movie.numberInStock}</td>
 				<td>{movie.dailyRentalRate}</td>
+				<td onClick={() => this.handleFavorite(movie)}>
+					<i className={movie.className} aria-hidden='true'></i>
+				</td>
 				<td>
 					<button
 						className='btn btn-danger btn-sm'
@@ -59,6 +63,21 @@ class Movies extends Component {
 	handleDelete = (movie) => {
 		const newListMovies = this.state.movies.filter((m) => m._id !== movie._id);
 		this.setState({ movies: newListMovies });
+	};
+
+	handleFavorite = (m) => {
+		let newClassName;
+		const newMovies = [...this.state.movies];
+		const index = newMovies.indexOf(m);
+		newMovies[index] = { ...m };
+		if (newMovies[index].className === "fa fa-heart-o") {
+			newClassName = "fa fa-heart";
+		} else {
+			newClassName = "fa fa-heart-o";
+		}
+		newMovies[index].className = newClassName;
+		this.setState({ movies: newMovies });
+		console.log(newMovies);
 	};
 }
 
