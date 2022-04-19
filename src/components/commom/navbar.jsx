@@ -9,22 +9,22 @@ const NavBar = () => {
 					<a className='nav-link disabled'>Vidly</a>
 				</li>
 				<li className='nav-item'>
-					<NavLink className='nav-link' to='/home'>
+					<NavLink className='nav-link' to='/home/'>
 						Home
 					</NavLink>
 				</li>
 				<li className='nav-item'>
-					<NavLink className='nav-link' to='/movies'>
+					<NavLink className='nav-link' to='/movies/'>
 						Movies
 					</NavLink>
 				</li>
 				<li className='nav-item'>
-					<NavLink className='nav-link' to='/customers'>
+					<NavLink className='nav-link' to='/customers/'>
 						Customers
 					</NavLink>
 				</li>
 				<li className='nav-item'>
-					<NavLink className='nav-link' to='/rentals'>
+					<NavLink className='nav-link' to='/rentals/'>
 						Rentals
 					</NavLink>
 				</li>

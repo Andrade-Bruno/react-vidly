@@ -41,7 +41,7 @@ class Movies extends Component {
 							display: "flex",
 							flexDirection: "row",
 							alignItems: "flex-start",
-							justifyContent: "flex-start",
+							justifyContent: "space-between",
 							gap: "50px",
 						}}>
 						<div>
@@ -58,6 +58,7 @@ class Movies extends Component {
 								alignItems: "flex-end",
 								justifyContent: "space-between",
 								height: "100%",
+								width: "100%",
 							}}>
 							<MoviesTable
 								data={movies}
