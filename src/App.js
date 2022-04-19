@@ -14,7 +14,6 @@ class App extends Component {
     return (
     <React.Fragment>
       <NavBar />
-      <div>
       <Switch>
         <Route path='/home/' exact component={Home}/>
         
@@ -29,7 +28,6 @@ class App extends Component {
         <Redirect from='/' exact to='/home/'/>
         <Redirect to='/not-found/' />
       </Switch>
-      </div>
     </React.Fragment>
   )
 }  
