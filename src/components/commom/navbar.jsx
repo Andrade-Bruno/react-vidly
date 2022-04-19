@@ -4,9 +4,9 @@ import { NavLink } from "react-router-dom";
 const NavBar = () => {
 	return (
 		<React.Fragment>
-			<ul className='nav nav-tabs'>
+			<ul className='nav nav-tabs justify-content-center'>
 				<li className='nav-item'>
-					<h1 className='nav-link disabled'>Vidly</h1>
+					<a className='nav-link disabled'>Vidly</a>
 				</li>
 				<li className='nav-item'>
 					<NavLink className='nav-link' to='/home'>

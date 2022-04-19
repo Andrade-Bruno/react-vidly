@@ -26,7 +26,7 @@ class App extends Component {
         <Route path='/rentals' component={Rentals}/>
 
         <Route path='/not-found' component={NotFound}/>
-        <Redirect path='/' exact to='/movies'/>
+        <Redirect path='/' exact to='/home'/>
         <Redirect to='/not-found' />
       </Switch>
       </div>
