@@ -9,11 +9,13 @@ import Movies from "./components/movies/movies";
 import MovieForm from "./components/movies/movieForm";
 import Customers from "./components/customers/customers";
 import Rentals from "./components/rentals/rentals";
+import urlLogo from './logo.png'
 
 class App extends Component {
   render() {
     return (
-      <React.Fragment>
+      <main className="container">
+        <img src={urlLogo} alt='Logo' />
         <NavBar />
         <Switch>
           <Route path="/login/" exact component={LoginForm} />
@@ -27,10 +29,10 @@ class App extends Component {
           <Route path="/rentals/" exact component={Rentals} />
 
           <Route path="/not-found/" component={NotFound} />
-          <Redirect from="/" exact to="/home/" />
+          <Redirect from="/" exact to="/login/" />
           <Redirect to="/not-found/" />
         </Switch>
-      </React.Fragment>
+      </main>
     );
   }
 }

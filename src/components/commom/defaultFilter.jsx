@@ -1,27 +1,72 @@
-import React from "react";
+import React, { Component } from "react";
 
-const DefaultFilter = (props) => {
-	const { items, defaultKey, defaultName, onItemSelect, selectedFilter } =
-		props;
-	return (
-		<React.Fragment>
-			<ul className='list-group'>
-				{items.map((i) => (
-					<li
-						key={i._id}
-						className={
-							i === selectedFilter
-								? "list-group-item active"
-								: "list-group-item"
-						}
-						onClick={() => onItemSelect(i)}>
-						{i.name}
-					</li>
-				))}
-			</ul>
-		</React.Fragment>
-	);
-};
+class DefaultFilter extends Component {
+	state = {
+		handleShow: false,
+	};
+
+	render() {
+		const {
+			items,
+			defaultKey,
+			defaultName,
+			onItemSelect,
+			selectedFilter,
+			filterTitle,
+		} = this.props;
+
+		const { handleShow } = this.state;
+
+		let classButton = "btn btn-primary dropdown-toggle";
+		let classUl = "dropdown-menu";
+		if (handleShow === true) {
+			classButton += " show";
+			classUl += " show";
+		}
+
+		return (
+			<React.Fragment>
+				<div
+					className='dropdown clickable'
+					onClick={() => this.handleDropdown()}>
+					<button
+						className={classButton}
+						type='button'
+						id={filterTitle}
+						data-bs-toggle='dropdown'
+						aria-expanded='true'
+						style={{ width: "100%" }}>
+						{filterTitle}
+					</button>
+					<ul className={classUl} aria-labelledby={filterTitle}>
+						{items.map((i) => (
+							<li
+								key={i._id}
+								className={
+									i === selectedFilter
+										? "dropdown-item active"
+										: "dropdown-item"
+								}
+								onClick={() => onItemSelect(i)}>
+								{i.name}
+							</li>
+						))}
+					</ul>
+				</div>
+			</React.Fragment>
+		);
+	}
+
+	handleDropdown() {
+		const { handleShow } = this.state;
+
+		if (handleShow === true) {
+			this.setState({ handleShow: false });
+		} else {
+			this.setState({ handleShow: true });
+		}
+	}
+}
 
 DefaultFilter.defaultProps = {
 	defaultKey: "_id",
