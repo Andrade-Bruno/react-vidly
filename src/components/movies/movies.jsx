@@ -26,15 +26,12 @@ class Movies extends Component {
 		const allRates = [{ _id: "", name: "All" }, ...getRates()];
 
 		this.setState({ movies: getMovies(), genres: allGenres, rates: allRates });
-		console.log(allRates);
-		console.log(allGenres);
 	}
 
 	render() {
 		const { pageSize, currentPage, sortColumn } = this.state;
 
 		const { totalCount, data: movies } = this.getPageData();
-
 		return (
 			<React.Fragment>
 				<div className='container-bordered'>
