@@ -8,6 +8,7 @@ import Home from "./components/home/home";
 import Movies from "./components/movies/movies";
 import MovieForm from "./components/movies/movieForm";
 import Customers from "./components/customers/customers";
+import CustomersForm from "./components/customers/customersForm";
 import Rentals from "./components/rentals/rentals";
 import urlLogo from './logo.png'
 
@@ -25,6 +26,7 @@ class App extends Component {
           <Route path="/movies/:id" exact component={MovieForm} />
 
           <Route path="/customers/" exact component={Customers} />
+          <Route path="/customers/:id" exact component={CustomersForm} />
 
           <Route path="/rentals/" exact component={Rentals} />
 
