@@ -1,21 +1,14 @@
 import React from "react";
 
 const Input = (props) => {
-	const { name, label, value, onChange, error, autoFocus } = props;
+	const { name, label, error, ...rest } = props;
 
 	return (
 		<div className='form-group'>
 			<label htmlFor={name} className='form-label'>
 				{label}
 			</label>
-			<input
-				autoFocus={autoFocus}
-				id={name}
-				type='text'
-				className='form-control'
-				name={name}
-				value={value}
-				onChange={onChange}></input>
+			<input {...rest} id={name} name={name} className='form-control'></input>
 			{/* If error is truphy, returns itself */}
 			{error && <div className='alert alert-warning'>{error}</div>}
 		</div>

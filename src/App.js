@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 
-import NavBar from "./components/commom/navbar";
 import NotFound from "./components/notFound";
 import LoginForm from "./components/login/loginForm";
+import SignUp from './components/signup/signUpForm';
 import Home from "./components/home/home";
 import Movies from "./components/movies/movies";
 import MovieForm from "./components/movies/movieForm";
@@ -17,16 +17,17 @@ class App extends Component {
     return (
       <main className="container">
         <img src={urlLogo} alt='Logo' />
-        <NavBar />
         <Switch>
           <Route path="/login/" exact component={LoginForm} />
+          <Route path="/sign-up/" exact component={SignUp} />
+
           <Route path="/home/" exact component={Home} />
 
           <Route path="/movies/" exact component={Movies} />
-          <Route path="/movies/:id" exact component={MovieForm} />
+          <Route path="/movies/:id/" exact component={MovieForm} />
 
           <Route path="/customers/" exact component={Customers} />
-          <Route path="/customers/:id" exact component={CustomersForm} />
+          <Route path="/customers/:id/" exact component={CustomersForm} />
 
           <Route path="/rentals/" exact component={Rentals} />
 

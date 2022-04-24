@@ -12,6 +12,7 @@ import { getRates } from "../../services/fakeRateService";
 import DefaultFilter from "../commom/defaultFilter";
 import Table from "../commom/table";
 import Favorite from "./favorite";
+import NavBar from "./../commom/navbar";
 
 class Movies extends Component {
 	state = {
@@ -73,19 +74,25 @@ class Movies extends Component {
 
 		return (
 			<React.Fragment>
+				<NavBar />
 				<div className='container-bordered'>
 					<h1>Movies</h1>
-					<h5>Search some movies, delete or favorite it!</h5>
+					<h5>Search for our movies, delete or favorite it</h5>
+
 					<hr></hr>
 					<div className='table-container'>
 						<div className='table-filters'>
-							<p>Filters</p>
+							<h5>Filters</h5>
 							<DefaultFilter
 								items={filter}
 								selectedFilter={selectedFilter}
 								onItemSelect={this.handleFilter}
 								filterTitle={"Genres"}
 							/>
+							<h5>Actions</h5>
+							<Link to='/movies/new/' className='btn btn-success'>
+								New Movie
+							</Link>
 						</div>
 						<div className='table-paginated'>
 							<Table

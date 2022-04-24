@@ -5,11 +5,11 @@ const NavBar = () => {
 	return (
 		<React.Fragment>
 			<ul className='nav navbar-light nav-tabs justify-content-center '>
-				<li className='nav-item'>
+				{/* <li className='nav-item'>
 					<NavLink className='nav-link' to='/login/'>
 						Login
 					</NavLink>
-				</li>
+				</li> */}
 				<li className='nav-item'>
 					<NavLink className='nav-link' to='/movies/'>
 						Movies

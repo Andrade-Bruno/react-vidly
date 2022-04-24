@@ -4,41 +4,41 @@ import Joi from "joi-browser";
 
 import Form from "../commom/form";
 
-class LoginForm extends Form {
+class SignUp extends Form {
 	state = {
-		data: { username: "", password: "" },
+		data: { name: "", email: "", password: "" },
 		errors: {},
 	};
 
 	schema = {
-		username: Joi.string().required().label("Username"),
-		password: Joi.string().required().label("Password"),
+		name: Joi.string().required().label("Name"),
+		email: Joi.string().required().label("Email").email(),
+		password: Joi.string().required().label("Password").min(5),
 	};
 
 	render() {
 		return (
 			<React.Fragment>
 				<div className='container-bordered'>
-					<h1>Login</h1>
+					<h1>Sign Up</h1>
 					<br></br>
-
 					<form onSubmit={this.handleSubmit}>
-						{this.renderInput("username", "Username")}
+						{this.renderInput("name", "Name")}
+						{this.renderInput("email", "Email", "email")}
 						{this.renderInput("password", "Password", "password")}
-						{this.renderButtonSubmit("Login")}
+						{this.renderButtonSubmit("Sign Up")}
+						<br></br>
+						<p>
+							Already registered? <Link to='/login/'>Login</Link>
+						</p>
 					</form>
-
-					<br></br>
-					<p>
-						Not registered? <Link to='/sign-up/'>Sign Up</Link>
-					</p>
 				</div>
 			</React.Fragment>
 		);
 	}
 
 	doSubmit = () => {
-		console.log("Singed In Successfully");
+		console.log("Signed Up Successfully");
 		// Call the server
 		setTimeout(function () {
 			window.location.href = "/movies/";
@@ -46,4 +46,4 @@ class LoginForm extends Form {
 	};
 }
 
-export default LoginForm;
+export default SignUp;

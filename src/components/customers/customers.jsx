@@ -10,6 +10,7 @@ import { getCities } from "../../services/fakeCityServices";
 
 import DefaultFilter from "../commom/defaultFilter";
 import Table from "../commom/table";
+import NavBar from "../commom/navbar";
 
 class Customers extends Component {
 	state = {
@@ -50,6 +51,7 @@ class Customers extends Component {
 
 		return (
 			<React.Fragment>
+				<NavBar />
 				<div className='container-bordered'>
 					<h1>Customers</h1>
 					<h5>Search for our customers</h5>
@@ -126,7 +128,7 @@ class Customers extends Component {
 	handleForm() {
 		const { customers } = this.state;
 
-		return customers.map((c) => <h1>customer.id</h1>);
+		return customers.map((c) => <h1>{c.id}</h1>);
 	}
 }
 
