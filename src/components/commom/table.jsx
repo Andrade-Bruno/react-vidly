@@ -24,7 +24,7 @@ class Table extends Component {
 		if (totalCount === 1) {
 			message += "result.";
 		} else if (totalCount <= 0) {
-			message = "There's no data available based on your search.";
+			message = "There's no data available.";
 		} else if (totalCount > 1) {
 			message += "results.";
 		}

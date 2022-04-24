@@ -6,8 +6,12 @@ import _ from "lodash";
 import { paginate } from "../../utils/paginate";
 import Pagination from "../../utils/pagination";
 
-import { getMovies } from "../../services/fakeMovieService";
-import { getGenres } from "../../services/fakeGenreService";
+// API
+import { getGenres, getMovies, deleteMovie } from "../../services/urlProvider";
+
+// DEVELOPMENT
+// import { getMovies } from "../../services/development/fakeMovieService";
+// import { getGenres } from "../../services/development/fakeGenreService";
 
 import DropdownFilter from "../commom/dropdownFilter";
 import Table from "../commom/table";
@@ -61,10 +65,13 @@ class Movies extends Component {
 		},
 	];
 
-	componentDidMount() {
-		const allGenres = [{ _id: "", name: "All" }, ...getGenres()];
+	async componentDidMount() {
+		const { data: genres } = await getGenres();
+		const allGenres = [{ _id: "", name: "All" }, ...genres];
 
-		this.setState({ data: getMovies(), filter: allGenres });
+		const { data: movies } = await getMovies();
+
+		this.setState({ data: movies, filter: allGenres });
 	}
 
 	render() {
@@ -196,10 +203,21 @@ class Movies extends Component {
 		this.setState({ data: newData });
 	};
 
-	handleDelete = (movie) => {
-		const newData = this.state.data.filter((m) => m._id !== movie._id);
+	handleDelete = async (movie) => {
+		const originalData = this.state.data;
+
+		const newData = originalData.filter((m) => m._id !== movie._id);
 		this.setState({ data: newData });
-		toast.success(`${movie.title} deleted successfully.`);
+
+		try {
+			await deleteMovie(movie._id);
+			toast.success(`"${movie.title}" deleted successfully.`);
+		} catch (ex) {
+			if (ex.response && ex.response.status === 404)
+				toast.error("This movie has already been deleted.");
+
+			this.setState({ data: originalData });
+		}
 	};
 }
 

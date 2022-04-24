@@ -2,8 +2,10 @@ import React from "react";
 import NavBar from "../commom/navbar";
 import Joi from "joi-browser";
 
-import { getMovie, saveMovie } from "../../services/fakeMovieService";
-import { getGenres } from "../../services/fakeGenreService";
+// DEVELOPMENT
+// import { saveMovie } from "../../services/development/fakeMovieService";
+// import { getGenres } from "../../services/development/fakeGenreService";
+import { getGenres, getMovie, saveMovie } from "../../services/urlProvider";
 
 import Form from "../commom/form";
 
@@ -21,24 +23,33 @@ class MovieForm extends Form {
 
 	schema = {
 		_id: Joi.string(),
-		title: Joi.string().required().label("Title"),
+		title: Joi.string().required().label("Title").min(5),
 		numberInStock: Joi.number().required().label("Number in stock"),
 		genreId: Joi.string().label("Genre"),
 		dailyRentalRate: Joi.number().required().label("Rate"),
-		// favorite: Joi.boolean(),
 	};
 
-	componentDidMount() {
-		const genres = getGenres();
+	async componentDidMount() {
+		await this.populateGenres();
+		await this.populateMovies();
+	}
+
+	async populateGenres() {
+		const { data: genres } = await getGenres();
 		this.setState({ genres });
+	}
 
-		const movieId = this.props.match.params.id;
-		if (movieId === "new") return;
+	async populateMovies() {
+		try {
+			const movieId = this.props.match.params.id;
+			if (movieId === "new") return;
 
-		const movie = getMovie(movieId);
-		if (!movie) return this.props.history.replace("/not-found/");
-
-		this.setState({ data: this.mapToViewModel(movie) });
+			const { data: movie } = await getMovie(movieId);
+			this.setState({ data: this.mapToViewModel(movie) });
+		} catch (ex) {
+			if (ex.response && ex.response.status === 404)
+				this.props.history.replace("/not-found/");
+		}
 	}
 
 	mapToViewModel(movie) {
@@ -78,8 +89,8 @@ class MovieForm extends Form {
 		);
 	}
 
-	doSubmit = () => {
-		saveMovie(this.state.data);
+	doSubmit = async () => {
+		await saveMovie(this.state.data);
 		this.props.history.push("/movies/");
 	};
 }

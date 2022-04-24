@@ -5,8 +5,8 @@ import _ from "lodash";
 import { paginate } from "../../utils/paginate";
 import Pagination from "../../utils/pagination";
 
-import { getCustomers } from "../../services/fakeCustomerService";
-import { getCities } from "../../services/fakeCityServices";
+import { getCustomers } from "../../services/development/fakeCustomerService";
+import { getCities } from "../../services/development/fakeCityServices";
 
 import DropdownFilter from "../commom/dropdownFilter";
 import Table from "../commom/table";
