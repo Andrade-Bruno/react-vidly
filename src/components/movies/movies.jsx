@@ -7,20 +7,21 @@ import Pagination from "../../utils/pagination";
 
 import { getMovies } from "../../services/fakeMovieService";
 import { getGenres } from "../../services/fakeGenreService";
-import { getRates } from "../../services/fakeRateService";
 
-import DefaultFilter from "../commom/defaultFilter";
+import DropdownFilter from "../commom/dropdownFilter";
 import Table from "../commom/table";
 import Favorite from "./favorite";
 import NavBar from "./../commom/navbar";
+import SearchBar from "./../commom/searchBar";
 
 class Movies extends Component {
 	state = {
-		movies: [],
+		data: [],
 		filter: [],
-		rates: [],
 		currentPage: 1,
 		pageSize: 5,
+		searchQuery: "",
+		selectedFilter: null,
 		sortColumn: { path: "title", order: "asc" },
 	};
 
@@ -61,38 +62,46 @@ class Movies extends Component {
 
 	componentDidMount() {
 		const allGenres = [{ _id: "", name: "All" }, ...getGenres()];
-		const allRates = [{ _id: "", name: "All" }, ...getRates()];
 
-		this.setState({ movies: getMovies(), filter: allGenres, rates: allRates });
+		this.setState({ data: getMovies(), filter: allGenres });
 	}
 
 	render() {
-		const { pageSize, currentPage, sortColumn, selectedFilter, filter } =
-			this.state;
+		const {
+			pageSize,
+			currentPage,
+			sortColumn,
+			selectedFilter,
+			filter,
+			searchQuery,
+		} = this.state;
 
-		const { totalCount, data } = this.getPageData();
+		const { totalCount, data } = this.getPageData("genre", "_id");
 
 		return (
 			<React.Fragment>
 				<NavBar />
 				<div className='container-bordered'>
-					<h1>Movies</h1>
-					<h5>Search for our movies, delete or favorite it</h5>
+					<h1>Movies </h1>
+					<h5>Search, create, delete and favorite movies</h5>
 
 					<hr></hr>
 					<div className='table-container'>
 						<div className='table-filters'>
-							<h5>Filters</h5>
-							<DefaultFilter
+							<DropdownFilter
 								items={filter}
 								selectedFilter={selectedFilter}
 								onItemSelect={this.handleFilter}
 								filterTitle={"Genres"}
 							/>
-							<h5>Actions</h5>
-							<Link to='/movies/new/' className='btn btn-success'>
-								New Movie
-							</Link>
+							<SearchBar
+								type='text'
+								label='Title'
+								name='query'
+								value={searchQuery}
+								className='form-control my-3'
+								onChange={(e) => this.handleSearch(e.currentTarget.value)}
+							/>
 						</div>
 						<div className='table-paginated'>
 							<Table
@@ -102,12 +111,17 @@ class Movies extends Component {
 								sortColumn={sortColumn}
 								onSort={this.handleSort}
 							/>
-							<Pagination
-								itemsCounter={totalCount}
-								pageSize={pageSize}
-								currentPage={currentPage}
-								onPageChange={this.handlePageChange}
-							/>
+							<div className='table-paginated-options'>
+								<Link to='/movies/new/' className='btn btn-secondary'>
+									New Movie
+								</Link>
+								<Pagination
+									itemsCounter={totalCount}
+									pageSize={pageSize}
+									currentPage={currentPage}
+									onPageChange={this.handlePageChange}
+								/>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -115,19 +129,26 @@ class Movies extends Component {
 		);
 	}
 
-	getPageData() {
+	getPageData(column, columnParam) {
 		const {
 			pageSize,
 			currentPage,
-			movies: allMovies,
-			selectedFilter,
 			sortColumn,
+			selectedFilter,
+			searchQuery,
+			data: allData,
 		} = this.state;
 
-		const finalFilter =
-			selectedFilter && selectedFilter._id
-				? allMovies.filter((m) => m.genre._id === selectedFilter._id)
-				: allMovies;
+		let finalFilter = allData;
+		if (searchQuery) {
+			finalFilter = allData.filter((item) =>
+				item.title.toLowerCase().startsWith(searchQuery.toLowerCase())
+			);
+		} else if (selectedFilter && selectedFilter[columnParam]) {
+			finalFilter = allData.filter(
+				(item) => item[column][columnParam] === selectedFilter[columnParam]
+			);
+		}
 
 		// _.orderBy(data, columns to filter (can be multiple), order to filter (can be multiple))
 		const finalSort = _.orderBy(
@@ -136,9 +157,9 @@ class Movies extends Component {
 			[sortColumn.order]
 		);
 
-		const movies = paginate(finalSort, currentPage, pageSize);
+		const data = paginate(finalSort, currentPage, pageSize);
 
-		return { totalCount: finalFilter.length, data: movies };
+		return { totalCount: finalFilter.length, data };
 	}
 
 	handlePageChange = (page) => {
@@ -146,24 +167,32 @@ class Movies extends Component {
 	};
 
 	handleFilter = (itemFilter) => {
-		this.setState({ currentPage: 1, selectedFilter: itemFilter });
+		this.setState({
+			currentPage: 1,
+			selectedFilter: itemFilter,
+			searchQuery: "",
+		});
 	};
 
 	handleSort = (sortColumn) => {
 		this.setState({ currentPage: 1, sortColumn: sortColumn });
 	};
 
+	handleSearch = (query) => {
+		this.setState({ currentPage: 1, selectedFilter: null, searchQuery: query });
+	};
+
 	handleFavorite = (movie) => {
-		const newMovies = [...this.state.movies];
-		const index = newMovies.indexOf(movie);
-		newMovies[index] = { ...movie };
-		newMovies[index].favorite = !newMovies[index].favorite;
-		this.setState({ movies: newMovies });
+		const newData = [...this.state.data];
+		const index = newData.indexOf(movie);
+		newData[index] = { ...movie };
+		newData[index].favorite = !newData[index].favorite;
+		this.setState({ data: newData });
 	};
 
 	handleDelete = (movie) => {
-		const newListMovies = this.state.movies.filter((m) => m._id !== movie._id);
-		this.setState({ movies: newListMovies });
+		const newData = this.state.data.filter((m) => m._id !== movie._id);
+		this.setState({ data: newData });
 	};
 }
 

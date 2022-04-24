@@ -6,11 +6,15 @@ const Favorite = (props) => {
 
 	return (
 		<React.Fragment>
-			<i
-				className={newClassName}
-				style={{ cursor: "pointer" }}
-				aria-hidden='true'
-				onClick={props.onClick}></i>
+			<button
+				className='btn btn-warning'
+				style={{ margin: 0, padding: "0.20em 1.25em" }}
+				onClick={props.onClick}>
+				<i
+					className={newClassName}
+					style={{ cursor: "pointer" }}
+					aria-hidden='true'></i>
+			</button>
 		</React.Fragment>
 	);
 };

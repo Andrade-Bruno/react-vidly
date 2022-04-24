@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-class DefaultFilter extends Component {
+class DropdownFilter extends Component {
 	state = {
 		handleShow: false,
 	};
@@ -41,14 +41,14 @@ class DefaultFilter extends Component {
 					<ul className={classUl} aria-labelledby={filterTitle}>
 						{items.map((i) => (
 							<li
-								key={i._id}
+								key={i[defaultKey]}
 								className={
 									i === selectedFilter
 										? "dropdown-item active"
 										: "dropdown-item"
 								}
 								onClick={() => onItemSelect(i)}>
-								{i.name}
+								{i[defaultName]}
 							</li>
 						))}
 					</ul>
@@ -68,9 +68,9 @@ class DefaultFilter extends Component {
 	}
 }
 
-DefaultFilter.defaultProps = {
+DropdownFilter.defaultProps = {
 	defaultKey: "_id",
 	defaultName: "name",
 };
 
-export default DefaultFilter;
+export default DropdownFilter;

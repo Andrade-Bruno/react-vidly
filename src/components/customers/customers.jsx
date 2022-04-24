@@ -8,7 +8,7 @@ import Pagination from "../../utils/pagination";
 import { getCustomers } from "../../services/fakeCustomerService";
 import { getCities } from "../../services/fakeCityServices";
 
-import DefaultFilter from "../commom/defaultFilter";
+import DropdownFilter from "../commom/dropdownFilter";
 import Table from "../commom/table";
 import NavBar from "../commom/navbar";
 
@@ -58,8 +58,7 @@ class Customers extends Component {
 					<hr></hr>
 					<div className='table-container'>
 						<div className='table-filters'>
-							<p>Filters</p>
-							<DefaultFilter
+							<DropdownFilter
 								items={filter}
 								selectedFilter={selectedFilter}
 								onItemSelect={this.handleFilter}
