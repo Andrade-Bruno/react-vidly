@@ -6,7 +6,7 @@ const CustomersForm = ({ match, history }) => {
 		<React.Fragment>
 			<NavBar />
 			<div className='container-bordered'>
-				<h1> Customer Form </h1>
+				<h1> New Customer </h1>
 				<h4> ID {match.params.id} </h4>
 				<h4> {match.params.id} </h4>
 				<hr></hr>

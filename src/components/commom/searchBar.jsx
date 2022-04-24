@@ -7,9 +7,9 @@ const SearchBar = (props) => {
 		<React.Fragment>
 			<div className='search-bar'>
 				<Input label={label} placeholder='Search...' {...rest} />
-				<button className='btn'>
+				{/* <button className='btn'>
 					<i className='fa fa-search' aria-hidden='true'></i>
-				</button>
+				</button> */}
 			</div>
 		</React.Fragment>
 	);

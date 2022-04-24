@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
+import { ToastContainer } from 'react-toastify';
 
 import NotFound from "./components/notFound";
 import LoginForm from "./components/login/loginForm";
@@ -16,6 +17,7 @@ class App extends Component {
   render() {
     return (
       <main className="container">
+        <ToastContainer />
         <img src={urlLogo} alt='Logo' />
         <Switch>
           <Route path="/login/" exact component={LoginForm} />

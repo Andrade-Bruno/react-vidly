@@ -7,7 +7,7 @@ class Table extends Component {
 	render() {
 		const { data, columns, sortColumn, onSort, totalCount } = this.props;
 		return (
-			<table className='table table-hover table-striped'>
+			<table className='table table-hover table-striped table-borderless'>
 				<caption>{this.handleTotalCount(totalCount)}</caption>
 				<TableHeader
 					columns={columns}

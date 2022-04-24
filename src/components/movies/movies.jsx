@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import _ from "lodash";
 import { paginate } from "../../utils/paginate";
@@ -48,7 +49,7 @@ class Movies extends Component {
 			),
 		},
 		{
-			width: "10%",
+			width: "5%",
 			key: "delete",
 			content: (movie) => (
 				<button
@@ -186,6 +187,11 @@ class Movies extends Component {
 		const newData = [...this.state.data];
 		const index = newData.indexOf(movie);
 		newData[index] = { ...movie };
+		if (newData[index].favorite === true) {
+			toast.info(`"${movie.title}" unfavorited.`);
+		} else {
+			toast.success(`"${movie.title}" favorited.`);
+		}
 		newData[index].favorite = !newData[index].favorite;
 		this.setState({ data: newData });
 	};
@@ -193,6 +199,7 @@ class Movies extends Component {
 	handleDelete = (movie) => {
 		const newData = this.state.data.filter((m) => m._id !== movie._id);
 		this.setState({ data: newData });
+		toast.success(`${movie.title} deleted successfully.`);
 	};
 }
 

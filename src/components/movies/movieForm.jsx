@@ -58,12 +58,12 @@ class MovieForm extends Form {
 			<React.Fragment>
 				<NavBar />
 				<div className='container-bordered'>
-					<h1> Movie Form </h1>
+					<h1> New Movie </h1>
 					<hr></hr>
 					<form onSubmit={this.handleSubmit}>
 						{this.renderInput("title", "Title")}
 						{this.renderSelect("genreId", "Genre", this.state.genres)}
-						{this.renderInput("numberInStock", "Stock", "number")}
+						{this.renderInput("numberInStock", "Stock")}
 						{this.renderInput("dailyRentalRate", "Rate")}
 						{this.renderButtonSubmit("Save")}
 					</form>
