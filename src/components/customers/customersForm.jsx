@@ -1,10 +1,8 @@
 import React from "react";
-import NavBar from "../commom/navbar";
 
 const CustomersForm = ({ match, history }) => {
 	return (
 		<React.Fragment>
-			<NavBar />
 			<div className='container-bordered'>
 				<h1> New Customer </h1>
 				<h4> ID {match.params.id} </h4>

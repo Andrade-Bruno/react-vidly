@@ -1,7 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import Joi from "joi-browser";
 
+import userService from "../../services/userService";
+import auth from "../../services/authService";
+import fn from "../../utils/functions";
 import Form from "../commom/form";
 
 class SignUp extends Form {
@@ -27,22 +31,33 @@ class SignUp extends Form {
 						{this.renderInput("email", "Email", "email")}
 						{this.renderInput("password", "Password", "password")}
 						{this.renderButtonSubmit("Sign Up")}
-						<br></br>
-						<p>
-							Already registered? <Link to='/login/'>Login</Link>
-						</p>
 					</form>
+					<br></br>
+					<p>
+						Already registered? <Link to='/login/'>Login</Link>
+					</p>
 				</div>
 			</React.Fragment>
 		);
 	}
 
-	doSubmit = () => {
-		console.log("Signed Up Successfully");
-		// Call the server
-		setTimeout(function () {
-			window.location.href = "/movies/";
-		}, 1000);
+	doSubmit = async () => {
+		try {
+			const response = await userService.register(this.state.data);
+			auth.loginWithJWT(response.headers["x-auth-token"]);
+
+			toast.success("Signed up successfully");
+			setTimeout(function () {
+				window.location = "/movies/";
+			}, 2000);
+		} catch (ex) {
+			if (ex.response && ex.response.status === 400) {
+				const errors = { ...this.state.errors };
+				errors.password = ex.response.data;
+				toast.warn(`${ex.response.data}`);
+				this.setState({ errors });
+			}
+		}
 	};
 }
 

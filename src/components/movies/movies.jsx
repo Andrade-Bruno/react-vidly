@@ -16,7 +16,6 @@ import { getGenres, getMovies, deleteMovie } from "../../services/urlProvider";
 import DropdownFilter from "../commom/dropdownFilter";
 import Table from "../commom/table";
 import Favorite from "./favorite";
-import NavBar from "./../commom/navbar";
 import SearchBar from "./../commom/searchBar";
 
 class Movies extends Component {
@@ -88,7 +87,6 @@ class Movies extends Component {
 
 		return (
 			<React.Fragment>
-				<NavBar />
 				<div className='container-bordered'>
 					<h1>Movies </h1>
 					<h5>Search, create, delete and favorite movies</h5>

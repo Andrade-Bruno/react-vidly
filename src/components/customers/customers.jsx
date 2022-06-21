@@ -10,7 +10,6 @@ import { getCities } from "../../services/development/fakeCityServices";
 
 import DropdownFilter from "../commom/dropdownFilter";
 import Table from "../commom/table";
-import NavBar from "../commom/navbar";
 
 class Customers extends Component {
 	state = {
@@ -51,7 +50,6 @@ class Customers extends Component {
 
 		return (
 			<React.Fragment>
-				<NavBar />
 				<div className='container-bordered'>
 					<h1>Customers</h1>
 					<h5>Search for our customers</h5>

@@ -1,5 +1,4 @@
 import React from "react";
-import NavBar from "../commom/navbar";
 import Joi from "joi-browser";
 
 // DEVELOPMENT
@@ -67,7 +66,6 @@ class MovieForm extends Form {
 
 		return (
 			<React.Fragment>
-				<NavBar />
 				<div className='container-bordered'>
 					<h1> New Movie </h1>
 					<hr></hr>
