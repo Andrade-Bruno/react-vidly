@@ -18,11 +18,6 @@ const NavBar = (props) => {
 							</NavLink>
 						</li>
 						<li className='nav-item'>
-							<NavLink className='nav-link' to='/rentals/'>
-								Rentals
-							</NavLink>
-						</li>
-						<li className='nav-item'>
 							<div className='nav-link'>
 								<i className='fa fa-user'></i>
 								&nbsp;{props.user.name}

@@ -48,7 +48,7 @@ class SignUp extends Form {
 
 			toast.success("Signed up successfully");
 			setTimeout(function () {
-				window.location = "/movies/";
+				window.location = "/";
 			}, 2000);
 		} catch (ex) {
 			if (ex.response && ex.response.status === 400) {

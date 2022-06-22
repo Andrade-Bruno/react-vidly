@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { toast } from "react-toastify";
 import Joi from "joi-browser";
 
@@ -20,6 +20,8 @@ class LoginForm extends Form {
 	};
 
 	render() {
+		if (auth.getUser()) return <Redirect to='/' />;
+
 		return (
 			<React.Fragment>
 				<div className='container-bordered'>
@@ -47,8 +49,9 @@ class LoginForm extends Form {
 			await auth.login(data.email, data.password);
 
 			toast.success("Singed in successfully! Please await...");
+			const { state } = this.props.location;
 			setTimeout(function () {
-				window.location = "/movies/";
+				window.location = state ? state.from.pathname : "/";
 			}, 2000);
 		} catch (ex) {
 			fn.handleBadRequest(ex);

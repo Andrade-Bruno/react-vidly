@@ -12,7 +12,6 @@ import Movies from "./components/movies/movies";
 import MovieForm from "./components/movies/movieForm";
 import Customers from "./components/customers/customers";
 import CustomersForm from "./components/customers/customersForm";
-import Rentals from "./components/rentals/rentals";
 import urlLogo from "./logo.png";
 import NavBar from "./components/commom/navbar";
 
@@ -54,9 +53,8 @@ class App extends Component {
 						exact
 						component={CustomersForm}
 					/>
-					<ProtectedRoute path='/rentals/' exact component={Rentals} />
 					<ProtectedRoute path='/not-found/' component={NotFound} />
-					<Redirect from='/' exact to='/login/' />
+					<Redirect from='/' exact to='/movies/' />
 					<Redirect to='/not-found/' />
 				</Switch>
 			</main>

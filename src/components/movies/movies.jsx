@@ -75,7 +75,6 @@ class Movies extends Component {
 			filter,
 			searchQuery,
 		} = this.state;
-		const { user } = this.props;
 
 		const { totalCount, data } = this.getPageData("genre", "_id");
 
@@ -112,11 +111,9 @@ class Movies extends Component {
 								onSort={this.handleSort}
 							/>
 							<div className='table-paginated-options'>
-								{user && (
-									<Link to='/movies/new/' className='btn btn-secondary'>
-										New Movie
-									</Link>
-								)}
+								<Link to='/movies/new/' className='btn btn-secondary'>
+									New Movie
+								</Link>
 								<Pagination
 									itemsCounter={totalCount}
 									pageSize={pageSize}
