@@ -1,22 +1,15 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-
 import _ from "lodash";
 import { paginate } from "../../utils/paginate";
 import Pagination from "../../utils/pagination";
-
-// API
-import { getGenres, getMovies, deleteMovie } from "../../services/urlProvider";
-
-// DEVELOPMENT
-// import { getMovies } from "../../services/development/fakeMovieService";
-// import { getGenres } from "../../services/development/fakeGenreService";
-
+import provider from "../../services/urlProvider";
 import DropdownFilter from "../commom/dropdownFilter";
 import Table from "../commom/table";
 import Favorite from "./favorite";
 import SearchBar from "./../commom/searchBar";
+import fn from "./../../utils/functions";
 
 class Movies extends Component {
 	state = {
@@ -65,10 +58,10 @@ class Movies extends Component {
 	];
 
 	async componentDidMount() {
-		const { data: genres } = await getGenres();
+		const { data: genres } = await provider.getGenres();
 		const allGenres = [{ _id: "", name: "All" }, ...genres];
 
-		const { data: movies } = await getMovies();
+		const { data: movies } = await provider.getMovies();
 
 		this.setState({ data: movies, filter: allGenres });
 	}
@@ -82,6 +75,7 @@ class Movies extends Component {
 			filter,
 			searchQuery,
 		} = this.state;
+		const { user } = this.props;
 
 		const { totalCount, data } = this.getPageData("genre", "_id");
 
@@ -118,9 +112,11 @@ class Movies extends Component {
 								onSort={this.handleSort}
 							/>
 							<div className='table-paginated-options'>
-								<Link to='/movies/new/' className='btn btn-secondary'>
-									New Movie
-								</Link>
+								{user && (
+									<Link to='/movies/new/' className='btn btn-secondary'>
+										New Movie
+									</Link>
+								)}
 								<Pagination
 									itemsCounter={totalCount}
 									pageSize={pageSize}
@@ -208,9 +204,10 @@ class Movies extends Component {
 		this.setState({ data: newData });
 
 		try {
-			await deleteMovie(movie._id);
+			await provider.deleteMovie(movie._id);
 			toast.success(`"${movie.title}" deleted successfully.`);
 		} catch (ex) {
+			fn.handleBadRequest(ex);
 			if (ex.response && ex.response.status === 404)
 				toast.error("This movie has already been deleted.");
 

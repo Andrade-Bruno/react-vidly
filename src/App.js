@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-
 import auth from "./services/authService";
-
+import ProtectedRoute from "./utils/protectedRoute";
 import NotFound from "./components/notFound";
 import SignUp from "./components/signup/signUpForm";
 import LoginForm from "./components/login/loginForm";
@@ -26,6 +25,7 @@ class App extends Component {
 	}
 
 	render() {
+		const { user } = this.state;
 		return (
 			<main className='container'>
 				<ToastContainer
@@ -40,23 +40,22 @@ class App extends Component {
 					pauseOnHover
 				/>
 				<img src={urlLogo} alt='Logo' />
-				<NavBar user={this.state.user} />
+				<NavBar user={user} />
 				<Switch>
 					<Route path='/sign-up/' exact component={SignUp} />
 					<Route path='/login/' exact component={LoginForm} />
 					<Route path='/logout/' exact component={Logout} />
-
-					<Route path='/home/' exact component={Home} />
-
-					<Route path='/movies/' exact component={Movies} />
-					<Route path='/movies/:id/' exact component={MovieForm} />
-
-					<Route path='/customers/' exact component={Customers} />
-					<Route path='/customers/:id/' exact component={CustomersForm} />
-
-					<Route path='/rentals/' exact component={Rentals} />
-
-					<Route path='/not-found/' component={NotFound} />
+					<ProtectedRoute path='/home/' exact component={Home} />
+					<ProtectedRoute path='/movies/' exact component={Movies} />
+					<ProtectedRoute path='/movies/:id/' exact component={MovieForm} />
+					<ProtectedRoute path='/customers/' exact component={Customers} />
+					<ProtectedRoute
+						path='/customers/:id/'
+						exact
+						component={CustomersForm}
+					/>
+					<ProtectedRoute path='/rentals/' exact component={Rentals} />
+					<ProtectedRoute path='/not-found/' component={NotFound} />
 					<Redirect from='/' exact to='/login/' />
 					<Redirect to='/not-found/' />
 				</Switch>

@@ -26,3 +26,11 @@ export function saveMovie(movie) {
 
 	return http.post(cfg.api + "movies/", movie);
 }
+
+export default {
+	getGenres,
+	getMovies,
+	deleteMovie,
+	getMovie,
+	saveMovie,
+};

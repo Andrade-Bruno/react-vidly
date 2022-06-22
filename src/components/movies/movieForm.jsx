@@ -1,11 +1,7 @@
 import React from "react";
 import Joi from "joi-browser";
-
-// DEVELOPMENT
-// import { saveMovie } from "../../services/development/fakeMovieService";
-// import { getGenres } from "../../services/development/fakeGenreService";
-import { getGenres, getMovie, saveMovie } from "../../services/urlProvider";
-
+import provider from "../../services/urlProvider";
+import fn from "./../../utils/functions";
 import Form from "../commom/form";
 
 class MovieForm extends Form {
@@ -34,7 +30,7 @@ class MovieForm extends Form {
 	}
 
 	async populateGenres() {
-		const { data: genres } = await getGenres();
+		const { data: genres } = await provider.getGenres();
 		this.setState({ genres });
 	}
 
@@ -43,7 +39,7 @@ class MovieForm extends Form {
 			const movieId = this.props.match.params.id;
 			if (movieId === "new") return;
 
-			const { data: movie } = await getMovie(movieId);
+			const { data: movie } = await provider.getMovie(movieId);
 			this.setState({ data: this.mapToViewModel(movie) });
 		} catch (ex) {
 			if (ex.response && ex.response.status === 404)
@@ -88,8 +84,12 @@ class MovieForm extends Form {
 	}
 
 	doSubmit = async () => {
-		await saveMovie(this.state.data);
-		this.props.history.push("/movies/");
+		try {
+			await provider.saveMovie(this.state.data);
+			this.props.history.push("/movies/");
+		} catch (ex) {
+			fn.handleBadRequest(ex);
+		}
 	};
 }
 

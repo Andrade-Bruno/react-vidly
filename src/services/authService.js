@@ -2,6 +2,8 @@ import http from "./httpService";
 import cfg from "../../src/cfg.json";
 import jwtDecode from "jwt-decode";
 
+http.setJwt(getJwt());
+
 export async function login(email, password) {
 	const { data: jwt } = await http.post(cfg.api + "auth/", {
 		email,
@@ -28,9 +30,14 @@ export function getUser() {
 	}
 }
 
+export function getJwt() {
+	return localStorage.getItem("token");
+}
+
 export default {
 	login,
 	logout,
 	getUser,
 	loginWithJWT,
+	getJwt,
 };
