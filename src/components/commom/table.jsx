@@ -20,13 +20,11 @@ class Table extends Component {
 	}
 
 	handleTotalCount(totalCount) {
-		let message = `Showing ${totalCount} `;
+		let message;
 		if (totalCount === 1) {
-			message += "result.";
-		} else if (totalCount <= 0) {
-			message = "There's no data available.";
+			message = "Showing 1 result.";
 		} else if (totalCount > 1) {
-			message += "results.";
+			message = `Showing ${totalCount} results.`;
 		}
 		return message;
 	}
