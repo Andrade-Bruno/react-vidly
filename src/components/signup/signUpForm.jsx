@@ -5,7 +5,6 @@ import Joi from "joi-browser";
 
 import userService from "../../services/userService";
 import auth from "../../services/authService";
-import fn from "../../utils/functions";
 import Form from "../commom/form";
 
 class SignUp extends Form {
